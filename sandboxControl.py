@@ -90,6 +90,7 @@ def newFrame():
     global intCount
     global strPolarCoords
     if intCount != 0:
+        flagSendToArd = True
         averageX = intSumX / intCount
         averageY = intSumY / intCount
         # Compute Polar Coordinates
@@ -109,7 +110,6 @@ def newFrame():
     else:
         print("No markers detected.")
     # Reset Measurements  
-    
     intSumX = 0
     intSumY = 0
     intCount = 0
