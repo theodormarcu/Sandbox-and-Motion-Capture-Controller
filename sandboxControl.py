@@ -108,7 +108,8 @@ def newFrame():
             strPolarCoords += struct.pack('>d', i)
     else:
         print("No markers detected.")
-    # Reset Measurements
+    # Reset Measurements  
+    
     intSumX = 0
     intSumY = 0
     intCount = 0
