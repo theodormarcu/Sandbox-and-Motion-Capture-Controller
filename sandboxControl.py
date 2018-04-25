@@ -25,6 +25,8 @@ import numpy as np
 # -900
 intCenterX = -600
 intCenterY = -900
+# Max distance is the average of x-y axes
+intMaxDistance = 3000
 
 # Sum of X positions per Frame
 intSumX = 0
@@ -92,6 +94,14 @@ def newFrame():
         averageY = intSumY / intCount
         # Compute Polar Coordinates
         polarCoords = computePolarCoord(averageX, averageY)
+        # Normalize the Polar Coordinates in a circle
+        # with radius = 1
+        polarCoords[0] = polarCoords[0] / intMaxDistance
+        # If bigger than 1, make it 1
+        if polarCoords[0] >= 1.0:
+            polarCoords[0] = 1.0
+        # Convert into [0, 1023]
+        polarCoords[0] = int(polarCoords[0] * 1023)
         print(polarCoords)
         # Send Them To The Arduino
         for i in polarCoords:
@@ -120,7 +130,8 @@ def addToAverage(intX, intY):
 def computePolarCoord(x, y):
     rho = np.sqrt(x**2 + y**2)
     phi = np.arctan2(x, y)
-    return (rho, phi)
+    vals = (rho, phi)
+    return list(vals)
 
 #----------------------------------------------------------------------#
 # Start Arduino Serial
