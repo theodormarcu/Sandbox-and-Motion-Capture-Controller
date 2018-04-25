@@ -18,6 +18,13 @@ import struct
 import numpy as np
 
 #----------------------------------------------------------------------#
+# Hard Coded Stuff
+# Determined by Measuring our MoCap Area
+# Default:
+# -600
+# -900
+intCenterX = -600
+intCenterY = -900
 
 # Sum of X positions per Frame
 intSumX = 0
@@ -27,6 +34,8 @@ intSumY = 0
 intCount = 0
 # String with polar coords
 strPolarCoords = b''
+# Flag to check if to send to arduino or not
+flagSendToArd = False
 
 # Value to check if our program is in sync with the molcap
 inSync = False
@@ -50,8 +59,9 @@ def readMoCap(path, args, types, src):
     global inSync
     if inSync == False and args[0] == "frame":
         print("TEST")
+        newFrame()
         inSync = True
-
+    
     if inSync == True:
         if args[0] == "marker":
             # Marker Detected
@@ -68,7 +78,7 @@ server.add_method(None, None, readMoCap)
 
 # New Frame Function
 # Called when a new frame is detected. Calculate
-# Average X and Y and then send them to the arduino. 
+# Average X and Y and then send them to the arduino.
 # If the count of
 # trackers is 0, don't call anything.
 def newFrame():
@@ -80,37 +90,41 @@ def newFrame():
     if intCount != 0:
         averageX = intSumX / intCount
         averageY = intSumY / intCount
-    # Reset averages
+        # Compute Polar Coordinates
+        polarCoords = computePolarCoord(averageX, averageY)
+        print(polarCoords)
+        # Send Them To The Arduino
+        for i in polarCoords:
+            strPolarCoords += struct.pack('>d', i)
+    else:
+        print("No markers detected.")
+    # Reset Measurements
     intSumX = 0
     intSumY = 0
     intCount = 0
-    if intCount != 0:
-        # Compute Polar Coordinates
-        polarCoords = computePolarCoord(averageX, averageY)
-        # Send Them To The Arduino
-        for i in polarCoords:
-            strPolarCoords += struct.pack('>B', i) 
-    else:
-        print("NOPE")
 
 # Add to averages (X & Y) when marker detected
-def addToAverage(intX, intY):  
+def addToAverage(intX, intY):
     global intSumX
     global intSumY
     global intCount
     intCount = intCount + 1
+    # Normalize
+    # Subtract the x from the middle of the circle
+    intX = intX - intCenterX
+    intY = intY - intCenterY
     intSumX = intSumX + intX
     intSumY = intSumY + intY
 
 # Function that calculates Polar Coordinates given x
 def computePolarCoord(x, y):
     rho = np.sqrt(x**2 + y**2)
-    phi = np.arctan2(y, x)
+    phi = np.arctan2(x, y)
     return (rho, phi)
 
 #----------------------------------------------------------------------#
 # Start Arduino Serial
-# The /dev/... path changes depending on the USB port on 
+# The /dev/... path changes depending on the USB port on
 # your computer
 
 ser = serial.Serial('/dev/cu.usbmodem1411', 9600)
@@ -118,4 +132,7 @@ ser = serial.Serial('/dev/cu.usbmodem1411', 9600)
 # loop and dispatch messages every 100ms
 while True:
     server.recv(500)
-    ser.write(strPolarCoords)
+    if flagSendToArd:
+        ser.write(strPolarCoords)
+        flagSendToArd = False
+
