@@ -23,8 +23,8 @@ import numpy as np
 # Default:
 # -600
 # -900
-intCenterX = -600
-intCenterY = -900
+intCenterX = 0
+intCenterY = 0
 # Max distance is the average of x-y axes
 intMaxDistance = 3000
 
@@ -60,7 +60,7 @@ def readMoCap(path, args, types, src):
     # you can start calculating averages
     global inSync
     if inSync == False and args[0] == "frame":
-        print("TEST")
+        # print("TEST")
         newFrame()
         inSync = True
     
@@ -68,7 +68,9 @@ def readMoCap(path, args, types, src):
         if args[0] == "marker":
             # Marker Detected
             # Add to the average
-            print("Marker!!!")
+            # print("Marker!!!")
+            print(args[1])
+            print(args[2])
             addToAverage(args[1], args[2])
         elif args[0] == "frame":
             # New Frame Detected
@@ -84,7 +86,7 @@ server.add_method(None, None, readMoCap)
 # If the count of
 # trackers is 0, don't call anything.
 def newFrame():
-    print("New Frame!!!")
+    # print("New Frame!!!")
     global intSumX
     global intSumY
     global intCount
@@ -139,7 +141,7 @@ def computePolarCoord(x, y):
 # The /dev/... path changes depending on the USB port on
 # your computer
 
-ser = serial.Serial('/dev/cu.usbmodem1411', 9600)
+ser = serial.Serial('/dev/cu.usbmodem1421', 9600)
 #----------------------------------------------------------------------#
 # loop and dispatch messages every 100ms
 while True:
