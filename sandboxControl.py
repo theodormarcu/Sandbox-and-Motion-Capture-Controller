@@ -23,10 +23,17 @@ import numpy as np
 # Default:
 # -600
 # -900
-intCenterX = 0
-intCenterY = 0
+intCenterX = -600
+intCenterY = -900
 # Max distance is the average of x-y axes
 intMaxDistance = 3000
+
+#----------------------------------------------------------------------#
+# Start Arduino Serial
+# The /dev/... path changes depending on the USB port on
+# your computer
+
+ser = serial.Serial('/dev/cu.usbmodem1421', 9600)
 
 # Sum of X positions per Frame
 intSumX = 0
@@ -38,6 +45,8 @@ intCount = 0
 strPolarCoords = b''
 # Flag to check if to send to arduino or not
 flagSendToArd = False
+# counter
+sendCounter = 0
 
 # Value to check if our program is in sync with the molcap
 inSync = False
@@ -69,8 +78,6 @@ def readMoCap(path, args, types, src):
             # Marker Detected
             # Add to the average
             # print("Marker!!!")
-            print(args[1])
-            print(args[2])
             addToAverage(args[1], args[2])
         elif args[0] == "frame":
             # New Frame Detected
@@ -104,11 +111,11 @@ def newFrame():
         if polarCoords[0] >= 1.0:
             polarCoords[0] = 1.0
         # Convert into [0, 1023]
-        polarCoords[0] = int(polarCoords[0] * 1023)
-        print(polarCoords)
-        # Send Them To The Arduino
-        for i in polarCoords:
-            strPolarCoords += struct.pack('>d', i)
+        polarCoords[0] = int(polarCoords[0] * 255)
+        strPolarCoords = str(polarCoords[0]).encode()
+        if sendCounter % 50 == 0:
+            print(strPolarCoords)
+            ser.write(bytes([polarCoords[0]]))
     else:
         print("No markers detected.")
     # Reset Measurements  
@@ -136,17 +143,13 @@ def computePolarCoord(x, y):
     vals = (rho, phi)
     return list(vals)
 
-#----------------------------------------------------------------------#
-# Start Arduino Serial
-# The /dev/... path changes depending on the USB port on
-# your computer
 
-ser = serial.Serial('/dev/cu.usbmodem1421', 9600)
 #----------------------------------------------------------------------#
 # loop and dispatch messages every 100ms
 while True:
-    server.recv(500)
-    if flagSendToArd:
-        ser.write(strPolarCoords)
-        flagSendToArd = False
+    server.recv(100)
+    sendCounter += 1
+    # if flagSendToArd == True:
+    #     ser.write(strPolarCoords)
+    #     flagSendToArd = False
 
