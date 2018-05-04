@@ -77,7 +77,8 @@ void loop()
     power = abs(diff) / speedScaling;
 
     //set both motors to run at (100/255 = 39)% duty cycle (slow)
-    analogWrite(pwm_a, 255);
+//    analogWrite(pwm_a, 255);
+    analogWrite(pwm_a, 100);
   }
 
   else

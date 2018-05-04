@@ -18,9 +18,13 @@ void setup() {
 
 void loop() {
   myservo.write(75);
-  delay(3900);
-  myservo.write(100);
-  delay(4000);
+  delay(4100);
+  myservo.write(105);
+  delay(2700);
+//  myservo.write(70);
+//  delay(3000);
+//  myservo.write(100);
+//  delay(2500);
 //  for (pos = 45; pos <= 135; pos += 1) { // goes from 0 degrees to 180 degrees
 //    // in steps of 1 degree
 //    myservo.write(80);              // tell servo to go to position in variable 'pos'
