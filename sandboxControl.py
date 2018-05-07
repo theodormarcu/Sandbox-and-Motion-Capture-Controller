@@ -106,29 +106,32 @@ def newFrame():
         flagSendToArd = True
         averageX = intSumX / intCount
         averageY = intSumY / intCount
-        # # Compute Polar Coordinates
-        # polarCoords = computePolarCoord(averageX, averageY)
-        # # Normalize the Polar Coordinates in a circle
-        # # with radius = 1
-        # polarCoords[0] = polarCoords[0] / intMaxDistance
-        # # If bigger than 1, make it 1
-        # if polarCoords[0] >= 1.0:
-        #     polarCoords[0] = 1.0
-        # # Convert into [0, 1023]
-        # polarCoords[0] = int(polarCoords[0] * 255)
-        # strPolarCoords = str(polarCoords[0]).encode()
-        # if sendCounter % 20 == 0:
-        #     print(strPolarCoords)
-        #     ser.write(bytes([polarCoords[0]]))
+        # Compute Polar Coordinates
+        polarCoords = computePolarCoord(averageX, averageY)
+        # Normalize the Polar Coordinates in a circle
+        # with radius = 1
+        polarCoords[0] = polarCoords[0] / intMaxDistance
+        # If bigger than 1, make it 1
+        if polarCoords[0] >= 1.0:
+            polarCoords[0] = 1.0
+        # Convert into [0, 1023]
+        polarCoords[0] = int(polarCoords[0] * 255)
+        strPolarCoords = str(polarCoords[0]).encode()
+        if sendCounter % 10 == 0:
+            print(strPolarCoords)
+            print(averageX)
+            print(averageY)
+            ser.write(bytes([polarCoords[0]]))
         # averageX = averageX / 5000
         # if averageX >= 1.0:
         #     averageX = 1.0
-        averageX = averageX + 3000
-        averageX = int(averageX % 255)
-        strAverageX = str(averageX).encode()
-        if sendCounter % 20 == 0:
-            print(strAverageX)
-            ser.write(bytes(strAverageX))
+        # elif 
+        # # averageX = averageX + 3000
+        # # averageX = int(averageX % 255)
+        # # strAverageX = str(averageX).encode()
+        # if sendCounter % 20 == 0:
+        #     print(strAverageX)
+        #     ser.write(bytes(strAverageX))
     else:
         print("No markers detected.")
     # Reset Measurements  
