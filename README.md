@@ -1,15 +1,17 @@
 # Sandbox-and-Motion-Capture-Controller
 
-This is the code for our final STC 209 Project (Princeton). 
-Annie Chen '18
-Theodor Marcu '20
-Evan Wood '18
+#### This is the code for our final STC 209 Project (Princeton). 
+##### Annie Chen '18 (anniec@princeton.edu)
+##### Theodor Marcu '20 (tmarcu@princeton.edu)
+##### Evan Wood '18 (ecwood@princeton.edu)
 
+## Abstract:
 For the final project, we had complete freedom to design and implement an art installation. Our art installation studies competing interests by allowing the observers to interact with a gamified environment consisitng of a kinetic sculpture and a visual projection. You can see the demo below:
 
+## Video
 
 
-Full Writeup:
+## Full Writeup
 
 Our project is focused on transforming and interpreting the movement of individuals who have different objectives into kinetic and visual art. We are really excited and fascinated by this because it involves a social side that is unpredictable yet harmonious, something none of us have had prior experience with. 
 
