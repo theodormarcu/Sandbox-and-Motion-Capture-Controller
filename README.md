@@ -12,7 +12,7 @@ For the final project, we had complete freedom to design and implement an art in
 
 ## Video
 
-[![STC 209 Video](https://imgur.com/ilJjzrG)](https://youtu.be/xtZd833lFZw)
+[![STC 209 Video](https://i.imgur.com/ilJjzrG.png)](https://youtu.be/xtZd833lFZw)
 
 [Link to Video on Youtube](https://youtu.be/xtZd833lFZw)
 
