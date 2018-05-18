@@ -1,4 +1,6 @@
-# Sandbox-and-Motion-Capture-Controller
+# An Exploration of Competing Interests
+## Sandbox-and-Motion-Capture-Controller &
+## Visual Projection Code
 
 #### This is the code for our final STC 209 Project (Princeton). 
 ##### Annie Chen '18 (anniec@princeton.edu)
@@ -10,9 +12,10 @@ For the final project, we had complete freedom to design and implement an art in
 
 ## Video
 
+[![STC 209 Video](https://imgur.com/ilJjzrG)](https://youtu.be/xtZd833lFZw)
+
 [Link to Video on Youtube](https://youtu.be/xtZd833lFZw)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xtZd833lFZw?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## Full Writeup
 
