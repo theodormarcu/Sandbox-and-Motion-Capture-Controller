@@ -10,6 +10,9 @@ For the final project, we had complete freedom to design and implement an art in
 
 ## Video
 
+[Link to Video on Youtube](https://youtu.be/xtZd833lFZw)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xtZd833lFZw?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## Full Writeup
 
@@ -25,21 +28,44 @@ When building our project, we faced multiple engineering challenges. One of them
 
 Another challenge was connecting the Motion Capture data coming from the cameras to the Arduino board. We started with a p5.js version, but we quickly realized that Javascript was not powerful enough for our needs. As a result, we switched to two completely new Python libraries that allowed for a smoother communication between MoCap data and the Arduino platform. Writing the code and calibrating it was one of the hardest parts of the project. For the visual part of our project, we ended up using p5.js to connect the MoCap data to the animation.
 
-
-Note: The code here is for inspiration purposes. I highly doubt that you can repliacte the setup that we used in the Princeton University CST Lab (it's hacked together across years), so the instructions below are pertinent only to that specific setup.
+## Running the code and starting the installation
+Note: The code here is for **inspiration purposes**. I highly doubt that you can replicate the setup that we used in the Princeton University CST Lab (it's hacked together across years), so the instructions below are pertinent only to that specific setup. Still, if you need some help doing something similar, I hope this helps!
 
 
 I. To run the Sandbox Motion Capture Controller:
-1. Start Motion Capture Software in the STC 209 Room
-   a. Start the VICON Video Capture Cameras and Software. Make sure to be in "Marker Mode" (no objects selected).
-   b. Start MATLAB Wifi Broadcast Program. This will broadcast each frame and marker to the StudioLab-5G Wifi Network and allow you to "listen" to the frames and markers.
-2. Start Python Motion Capture Listener (sandboxControl.py)
-   The program listens to port 3333 using liblo and reads each frame and marker. It syncs itself with the broadcast by waiting for a frame and then starts averaging all the x and y positions of the markers. The sandbox control program will then send this average to the arduino microcontroller.
-   Terminal: $ python sandboxControl.py
-3. Connect Arduino to Computer (Port may differ)
-4. Start Arduino Software and upload "SlidePotMotor.ino"
-5. The installation should be working!
+Dependencies:
+1. Liblo
+2. Arduino
+3. Vicon and Matlab Setup (In StudioLab, Basement of Fine Hall)
+4. Serial (To connect python to arduino)
 
 
-II. To run the Visual Part of the project: 
-   TO DO
+   1. Start Motion Capture Software in the STC 209 Room
+      a. Start the VICON Video Capture Cameras and Software. Make sure to be in "Marker Mode" (no objects selected).
+      b. Start MATLAB Wifi Broadcast Program. This will broadcast each frame and marker to the StudioLab-5G Wifi Network and allow you to "listen" to the frames and markers.
+   2. Start Python Motion Capture Listener (sandboxControl.py)
+      The program listens to port 3333 using liblo and reads each frame and marker. It syncs itself with the broadcast by waiting for a frame and then starts averaging all the x and y positions of the markers. The sandbox control program will then send this average to the arduino microcontroller.
+      Terminal: $ python sandboxControl.py
+   3. Connect Arduino to Computer (Port may differ)
+   4. Start Arduino Software and upload "SlidePotMotor.ino"
+   5. The installation should be working!
+
+
+II. To run the Visual Part of the project:
+Dependencies: 
+1. P5JS
+2. Bridge
+
+#### Everything is in the "Visuals" folder.
+
+1. install [Node](nodejs.org)
+
+2. install required node modules
+
+    $ npm install
+
+3. run!
+
+    $ node bridge.js
+
+4. then navigate to the app and open `index.html` in a browser
